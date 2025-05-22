@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+	<link rel="stylesheet" href="style.css">
+	<style>
+		html, body {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+
+</head>
+<body>
+
+	<div style="display: flex; flex-direction: column; align-items: center; padding: 20px; box-sizing: border-box">
+		<!--Just changed method to post-->
+		<input id="magnet" placeholder="Magnet link" style="text-align: center"></input>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<label for="torrent">or upload .torrent file</label>
+			<input style="width: auto" type="file" id="torrent" name="torrent" accept=".torrent">
+		</div>
+		<button id="submit" onclick="submit()">Submit</button>
+
+		<div style="height: 20px"></div>
+		<h4 style="text-align: center">Download might take up to a minute to start, please be patient</h4>
+		<div id="fileList" style="width: 100%; padding: 0 25px 0 25px; box-sizing: border-box">
+		</div>
+	</div>
+
+	<dialog id="error">
+		<article>
+			<h2>Error</h2>
+				<p>Magnet link / .torrent file is invalid</p>
+			<footer>
+				<button onclick="document.querySelector('#error').open = false">OK</button>
+			</footer>
+		</article>
+	</dialog>
+
+	<script>
+
+		let downloadMagnet = ""
+		function submit() {
+
+			document.querySelector("#fileList").innerHTML = ""
+			document.querySelector("#submit").disabled = true
+			document.querySelector("#submit").innerHTML = "Fetching files... can take up to a minute"
+
+			const formData = new FormData();
+			formData.append("magnet", document.querySelector("#magnet").value);
+			formData.append("torrent", document.querySelector("#torrent").files[0]);
+
+			const xhr = new XMLHttpRequest()
+			xhr.addEventListener('load', function() {
+
+				if (xhr.status === 200) {
+
+					if (xhr.getResponseHeader('Content-Type').includes('application/json')) {
+
+						let res = JSON.parse(xhr.responseText)
+						for (let i in res.fileNames) {
+							item = res.fileNames[i]
+
+							let div = document.createElement("div")
+							div.style.display = "flex"
+							div.style.justifyContent = "space-between"
+							div.style.marginBottom = "25px"
+
+							let h6 = document.createElement("h6")
+							h6.style.display = "inline-block"
+							h6.style.wordBreak = "break-all"
+							h6.innerHTML = item
+
+							let a = document.createElement("a")
+							a.href = "/download?magnet=" + encodeURIComponent(res.magnet) + "&fileIndex=" + i;
+							a.onclick = function(event) {
+								event.preventDefault()
+								//We do this to prevent the user from spamming the <a>
+								//There is no good method to completely disable an <a> tag for file download
+								//Disabling it directly will result in cancelling the download
+								const tempLink = document.createElement("a");
+								tempLink.href = a.href;
+								tempLink.setAttribute("download", ""); 
+								tempLink.style.display = "none";
+								document.body.appendChild(tempLink);
+								tempLink.click();
+								document.body.removeChild(tempLink);
+
+								this.setAttribute("disabled", true);
+								this.setAttribute("href", "javascript:void(0)")
+								this.getElementsByTagName("button")[0].disabled = true
+
+							};
+
+							let button = document.createElement("button")
+							button.style.marginLeft = "25px"
+							button.innerHTML = "Download"
+
+							document.querySelector("#fileList").appendChild(div)
+							button.style.height = "initial"
+							a.appendChild(button)
+
+							div.appendChild(h6)
+							div.appendChild(a)
+
+							document.querySelector("#fileList").appendChild(div)
+
+						}
+
+					} else {
+						if(xhr.responseText == "INVALID") {
+							document.querySelector("#error").open = true
+						}
+					}
+				} else {
+
+					console.log('Upload failed:', xhr.responseText);
+					document.querySelector("#submit").disabled = false
+					document.querySelector("#submit").innerHTML = "Submit"
+					document.querySelector("#magnet").value = ""
+					document.querySelector("#torrent").value = ""
+
+				}
+
+				document.querySelector("#submit").disabled = false
+				document.querySelector("#submit").innerHTML = "Submit"
+				document.querySelector("#magnet").value = ""
+				document.querySelector("#torrent").value = ""
+
+			});
+
+			xhr.open('POST', '/fileList'); 
+			xhr.send(formData);
+
+		}
+
+	</script>
+</body>
+</html>
+

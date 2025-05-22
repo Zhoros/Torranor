@@ -1,0 +1,6 @@
+*.exe
+*.bat
+.vscode
+.idea
+data/
+temp/
