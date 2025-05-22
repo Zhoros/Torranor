@@ -20,7 +20,7 @@ func NewTorrentStreamer() (*Torrent, error) {
 	cfg := torrent.NewDefaultClientConfig()
 	cfg.DataDir = "./data"
 	cfg.UploadRateLimiter = rate.NewLimiter(rate.Limit(UploadKBps * 1024), int(UploadBurstSizeKB * 1024))
-	cfg.ListenPort = int(SeedingPort)
+	cfg.ListenPort = int(ListeningPort)
 
 	client, err := torrent.NewClient(cfg)
 	if err != nil {

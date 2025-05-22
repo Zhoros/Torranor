@@ -3,7 +3,6 @@ services:
     build: .
     ports:
       - "80:80" #Web access
-      - "6881:6881" #Torrent seeding port, match this with the port in config.json
+      - "6881:6881" #Torrent listening port, match this with the port in config.json
     volumes:
       - ./config.json:/app/config.json #This file is already included in this project
-      - ./data:/app/data #This is optional, only if you want to access the torrent files

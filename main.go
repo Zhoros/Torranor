@@ -58,7 +58,7 @@ func DecrementUsage(t *torrent.Torrent) {
 					delete(usageCount, t.InfoHash().HexString())
 					err := os.RemoveAll("./data/" + t.Name())
 					if err != nil {
-						fmt.Printf("error deleting unused torrent file: %v", err)
+						Log.Printf("error deleting unused torrent file: %v", err)
 					}
 
 				}
@@ -245,5 +245,6 @@ func main() {
 	fs := http.FileServer(http.Dir("./public"))
     http.Handle("/", fs)
 
+	fmt.Println("Server is listening on http://0.0.0.0:80")
 	log.Fatal(http.ListenAndServe("0.0.0.0:80", nil))
 }

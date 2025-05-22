@@ -10,14 +10,14 @@ type Config struct {
     UploadKBps uint64 `json:"uploadKBps"`
     UploadBurstSizeKB uint64 `json:"uploadBurstSizeKB"`
 	SeedDurationMinute uint64 `json:"seedDurationMinute"`
-    SeedingPort uint `json:"seedingPort"`
+    ListeningPort uint `json:"listeningPort"`
 }
 
 var (
 	UploadKBps uint64
 	UploadBurstSizeKB uint64
 	SeedDurationMinute uint64
-	SeedingPort uint
+	ListeningPort uint
 )
 
 func InitializeConfig(path string) {
@@ -35,6 +35,6 @@ func InitializeConfig(path string) {
 	UploadKBps = config.UploadKBps 
 	UploadBurstSizeKB = config.UploadBurstSizeKB 
 	SeedDurationMinute = config.SeedDurationMinute
-	SeedingPort = config.SeedingPort
+	ListeningPort = config.ListeningPort
 
 }
