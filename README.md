@@ -10,8 +10,8 @@ Torranor is a web app that allows you to download torrents **DIRECTLY** from you
 
 ## Settings
 Inside `config.json` file, there are several values that you can modify:  
-- `uploadKBps` = limit upload speed in **KILOBYTE**/s  
-- `uploadBurstSizeKB` = maximum burst upload in **KILOBYTE** if there has been no upload for a while. e.g. if you set this to 10240 and your upload speed has been 0 KBps for the last 10 seconds, it will burst 10240 kb all at once to compensate, but will never exceed this limit. If you don't understand it, just set it to the same value as `UploadKBps`  
+- `uploadKBps` = limit seeding upload speed in **KILOBYTE**/s  
+- `uploadBurstSizeKB` = maximum seeding burst upload in **KILOBYTE** if there has been no upload for a while. e.g. if you set this to 10240 and your upload speed has been 0 KBps for the last 10 seconds, it will burst 10240 kb all at once to compensate, but will never exceed this limit. If you don't understand it, just set it to the same value as `UploadKBps`  
 - `seedDurationMinute` = after you finish downloading a file from your browser, the server will **automatically** start seeding your file for the specified duration
 - `listeningPort` = your torrent listening port, make sure that this port is accessible and match it with the port mapping inside your `docker-compose.yml` file
 
