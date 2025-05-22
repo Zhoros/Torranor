@@ -18,6 +18,7 @@ Inside `config.json` file, there are several values that you can modify:
 ## Important
 - All your files that are being seeded by the server are temporary. It will all be **DELETED** when you restart the server
 - Fetching and download might take up to a minute to start, it's not broken / stuck
+- The Dockerfile build can take up to 5 minutes on 1 core CPU, it's not broken / stuck
 
 ## Install with docker
 1. Make sure the listening port inside `config.json` and your `docker-compose.yml` port mapping matches
