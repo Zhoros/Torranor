@@ -21,6 +21,7 @@ func NewTorrentStreamer() (*Torrent, error) {
 	cfg.DataDir = "./data"
 	cfg.UploadRateLimiter = rate.NewLimiter(rate.Limit(UploadKBps * 1024), int(UploadBurstSizeKB * 1024))
 	cfg.ListenPort = int(ListeningPort)
+	cfg.Seed = true
 
 	client, err := torrent.NewClient(cfg)
 	if err != nil {
@@ -74,7 +75,7 @@ func (ts *Torrent) StreamFile(w http.ResponseWriter, t *torrent.Torrent, fileInd
 	defer reader.Close()
 
 	file.SetPriority(torrent.PiecePriorityNormal)
-	reader.SetReadahead(file.Length() / 100)
+	reader.SetReadahead(5 << 20) //5MB
 
 	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", filepath.Base(file.Path())))
 	w.Header().Set("Content-Type", "application/octet-stream")
