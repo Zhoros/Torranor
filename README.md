@@ -1,7 +1,7 @@
 # Torranor
 Torranor is a web app that allows you to download torrents **DIRECTLY** from your web browser
-- It's different from WebTorrent / WebRTC torrent. WebTorrent can only connect to another clients that support WebRTC. This means that the download speed will be slower than traditional torrent, especially when there is very little seeder. Torranor connects directly to the BitTorrent network, resulting in faster downlaod
-- It **streams** torrent download directly to your browser. The server acts as a connection proxy
+
+It's different from WebTorrent / WebRTC torrent. WebTorrent can only connect to another clients that support WebRTC. This means that the download speed will be slower than traditional torrent, especially when there is very little seeder. Torranor connects directly to the BitTorrent network and stream the download directly to your browser in real time
 
 ### <ins>**Please star this repo if you find it useful, thank you!**</ins>
 
