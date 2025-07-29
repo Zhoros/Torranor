@@ -20,6 +20,9 @@ Inside `config.json` file, there are several values that you can modify:
 - Fetching and download might take up to a minute to start, it's not broken / stuck
 - The Dockerfile build can take up to 5 minutes on 1 core CPU, it's not broken / stuck
 
+## Build with docker
+docker build -t torranor .
+
 ## Install with docker
 1. Make sure the listening port inside `config.json` and your `docker-compose.yml` port mapping matches
 2. `docker compose up -d`

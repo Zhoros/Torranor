@@ -1,8 +1,8 @@
 services:
   torranor:
-    build: .
+    image: torranor:latest
     ports:
       - "80:80" #Web access
       - "6881:6881" #Torrent listening port, match this with the port in config.json
     volumes:
-      - ./config.json:/app/config.json #This file is already included in this project
+      - ./config.json:/config.json #This file is already included in this project
