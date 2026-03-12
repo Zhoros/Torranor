@@ -1,6 +1,3 @@
-# I'm open to work
-see my github profile for my email
-
 # Torranor
 Torranor is a web app that allows you to download torrents **DIRECTLY** from your web browser
 
