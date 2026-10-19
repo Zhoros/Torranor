@@ -26,7 +26,7 @@ func IncrementUsage(t *torrent.Torrent) {
 	usageCountMutex.Lock()
     defer usageCountMutex.Unlock()
 	_, exists := usageCount[t.InfoHash().HexString()]
-	if eists {
+	if exists {
 		usageCount[t.InfoHash().HexString()]++
 	} else {
 		usageCount[t.InfoHash().HexString()] = 1
